@@ -201,7 +201,7 @@ class Process:
 
                         tempDest = destPath + os.sep + folderName + os.sep + outputName + "." + thisType
                         tempPlistDest = destPath + os.sep + folderName + os.sep + outputName + ".plist"
-                        print("tempDest: {}\ntempPlistDest: {}".format(tempDest, tempPlistDest))
+                        #print("tempDest: {}\ntempPlistDest: {}".format(tempDest, tempPlistDest))
 
                         params += " --sheet " + "\"" + tempDest + "\""
                         params += " --data " + "\"" + tempPlistDest + "\""
@@ -210,7 +210,7 @@ class Process:
 
                         self.callTP(params)
                 
-                self.replacePlistFrameName(rt, destPath, tempPlistDest, files)
+                    self.replacePlistFrameNameSingle(destPath, tempPlistDest, _file)
 
 
     def packMultiple(self, srcPath, destPath, texturePackerPath):
@@ -271,6 +271,21 @@ class Process:
 
                 self.replacePlistFrameName(rt, destPath, tempPlistDest, files)
 
+    def replacePlistFrameNameSingle(self, destPath, plistPath, tgaFile):
+        plist = plistlib.readPlist(plistPath)
+        plist = plistlib.writePlistToString(plist)
+
+        plistName = os.path.basename(plistPath)
+        plistName = plistName.split(".")[0]
+        plistDir = os.path.dirname(plistPath)
+        destPath = os.path.dirname(destPath)
+        plistDir = plistDir[len(destPath) + 1: ]
+        newName = plistDir + os.sep + plistName + os.sep + plistName + ".tga"
+        plist = plist.replace(tgaFile, newName)
+
+        plist = plistlib.readPlistFromString(plist)
+        plistlib.writePlist(plist, plistPath)
+
     def replacePlistFrameName(self, filePath, destPath, plistPath, srcFiles):
         plist = plistlib.readPlist(plistPath)
         basePath = os.path.dirname(plistPath)
@@ -286,7 +301,7 @@ class Process:
             newName = newName[len(destPath) + 1: ]
             #newName = newName.replace("\\", os.sep)
             plist = plist.replace(_file, newName)
-        #plist = plistlib.readPlistFromString(plist)
+        plist = plistlib.readPlistFromString(plist)
         plistlib.writePlist(plist, plistPath)
 
         """
