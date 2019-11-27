@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<TexturePacker cmdPath1="D:\\Program Files\\CodeAndWeb\\TexturePacker\\bin\\TexturePacker.exe" cmdPath2="/Applications/TexturePacker.app/Contents/MacOS/TexturePacker">
+    <pack src="artsrc/frames/back" dest="art/frames/back" type="pvr.ccz" type2="RGBA8888" scale="1.0" packSingle="0" originalName="3" alphaRate="60" rbgRate="60" sizeConstraints="AnySize" maxSize="4096"/>
+</TexturePacker>
